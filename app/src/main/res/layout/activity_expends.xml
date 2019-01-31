@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/janleaAluga"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--Imagens-->
+            <ImageView
+                android:id="@+id/img_expands"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"/>
+            <!--Barra de progresso-->
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:layout_marginEnd="6dp"
+                android:gravity="center|center_vertical"
+                android:visibility="invisible" />
+
+            <!--Nome do item-->
+            <TextView
+                android:id="@+id/tNome"
+                android:textSize="20sp"
+                android:fontFamily="@font/armata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
+
+            <!--Tempo/Custo-->
+            <TextView
+                android:id="@+id/showTC"
+                android:textSize="15sp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/text_view_stile_1"
+                android:textColor="@color/branco"/>
+
+            <!--disponibilidade-->
+            <TextView
+                android:id="@+id/showDisponivel"
+                android:textSize="13sp"
+                android:fontFamily="@font/armata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
+
+            <!--confirmação-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Alugar"
+                android:textSize="15dp"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

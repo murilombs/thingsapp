@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:padding="25dp"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@color/colorPrimary"
+            android:padding="30dp"
+            android:fontFamily="@font/armata"
+            android:text="@string/welcome"/>
+        <!-- Name -->
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:fontFamily="@font/armata"
+            android:inputType="textPersonName"
+            android:hint="@string/firstname"
+            android:textAlignment="textStart"
+            android:textColor="@color/preto"
+            android:textColorHint="@color/variant_2" />
+        <!-- Second Name -->
+        <EditText
+            android:id="@+id/user_second_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/armata"
+            android:inputType="textPersonName"
+            android:hint="@string/secondName"
+            android:textAlignment="textStart"
+            android:textColor="@color/preto"
+            android:textColorHint="@color/variant_2" />
+        <!-- Email -->
+        <EditText
+            android:id="@+id/user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/armata"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email"
+            android:textAlignment="textStart"
+            android:textColor="@color/preto"
+            android:textColorHint="@color/variant_2"/>
+        <!--Password-->
+        <EditText
+            android:id="@+id/user_password_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/armata"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textAlignment="textStart"
+            android:textColor="@color/preto"
+            android:textColorHint="@color/variant_2" />
+        <!-- Password confirma -->
+        <EditText
+            android:id="@+id/user_password_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/armata"
+            android:hint="@string/password_b"
+            android:inputType="textPassword"
+            android:textAlignment="textStart"
+            android:textColor="@color/preto"
+            android:textColorHint="@color/variant_2" />
+        <!-- enviar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="25dp"
+            android:orientation="horizontal">
+            <!-- Login btn -->
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_btn_custo"
+                android:fontFamily="@font/armata"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Things</string>
+    <!--botão de registro de novo item-->
+    <string name="new_item">Novo Item</string>
+    <string name="title_activity_register_new_item">RegisterNewItem</string>
+    <string name="nome_item">Nome do Item</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Tempo Custo-->
+    <string name="Op1">12 Horas | R$ 15</string>
+    <string name="Op2">20 Horas | R$ 17</string>
+    <string name="Op3">40 Horas | R$ 20</string>
+
+    <!--foto-->
+    <string name="add_fotos_text">Adicione de uma a três fotos do seu item</string>
+
+    <!--Mensagens-->
+    <string name = "erro_name_registerNewItem">Nome é obrigatório</string>
+    <string name = "erro_campo_req">Esse campo é obrigatorio</string>
+    <string name = "email_req">Entre com um email valido</string>
+    <string name = "form_res_err">Preencha os campos corretamente</string>
+    <string name = "len_req">A senha deve ter no minimo 8 caracteres</string>
+    <string name = "pass_res_err">A senha não confere</string>
+    <string name = "welcome">Bem Vindo</string>
+
+    <!-- disponibilidade -->
+    <string name="disponivel_entrega">Disponivel</string>
+    <string name="indisponivel_entrega">Indisponivel</string>
+
+    <!-- utils -->
+    <string name="firstname">Primeiro nome</string>
+    <string name="secondName">Ultimo nome</string>
+    <string name="newPic">Nova foto de perfil</string>>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="password_b">Confirme a Senha</string>
+    <string name="submit">Enviar</string>
+    <string name="txt_register">E novo aqui?</string>
+    <string name="register">Cadastre-se</string>
+
+    <!--abas-->
+    <string name="proprios">Meus</string>
+    <string name="emprestados">Alugados</string>
+</resources>

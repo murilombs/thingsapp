@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <!--toolbar-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarRI"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <!--Nome-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nome_item"
+        android:textSize="18sp"
+        android:layout_marginStart="10dp"/>
+    <EditText
+        android:id="@+id/ItemName"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
+
+    <!--Adicionar Imagem-->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/add_fotos_text"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"/>
+    <ImageButton
+        android:id="@+id/bAbrirCamera"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/baseline_camera_alt_black_18"
+        android:layout_marginStart="10dp"/>
+
+    <!--Tempo/Custo-->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Escolha o custo e tempo"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"/>
+    <RadioGroup
+        android:id="@+id/tempoCusto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp">
+        <RadioButton
+            android:id="@+id/doze"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Op1"
+            android:textSize="12sp"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/vinte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Op2"
+            android:textSize="12sp"/>
+        <RadioButton
+            android:id="@+id/quarenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Op3"
+            android:textSize="12sp"/>
+    </RadioGroup>
+
+    <!--Espaço pro endereço-->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Escolha o endereço na lista abaixo"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"/>
+    <EditText
+        android:id="@+id/sugestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
+
+    <!-- Disponibilidade para entrega -->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Disponibilidade para entrega"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"/>
+    <RadioGroup
+        android:id="@+id/disponibilidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="5dp">
+        <RadioButton
+            android:id="@+id/disponivel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/disponivel_entrega"
+            android:textSize="12sp"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/indisponivel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/indisponivel_entrega"
+            android:textSize="12sp"/>
+    </RadioGroup>
+
+    <!--Botão para registrar-->
+    <Button
+        android:id="@+id/btnRegistrarItem"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@color/segundary"
+        android:text="Registrar Item"
+        android:layout_marginTop="20dp"
+        android:paddingRight="3dp"
+        android:paddingLeft="3dp"
+        android:layout_gravity="center"/>
+</LinearLayout>

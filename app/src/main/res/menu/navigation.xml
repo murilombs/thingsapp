@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/round_home_24"
+        android:title="Menu"/>
+
+    <item
+        android:id="@+id/navigation_itens"
+        android:icon="@drawable/round_markunread_mailbox_24"
+        android:title="Itens"/>
+
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/outline_chat_bubble_24"
+        android:title="Conversas"/>
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/round_account_box_24"
+        android:title="Perfil"/>
+</menu>

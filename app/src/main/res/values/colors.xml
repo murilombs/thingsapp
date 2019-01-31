@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- primarias -->
+    <color name="colorPrimary">#00d301</color>
+    <color name="primaryVariant">#14aa34</color>
+
+    <!-- segundarias -->
+    <color name="segundary">#1de9b6</color>
+
+    <!-- variantes-->
+    <color name="valiant_1">#6bfff7</color>
+    <color name="variant_2">#52afaa</color>
+    <color name="variant_3">#6dffbf</color>
+
+
+    <!--branco-->
+    <color name="branco">#FFFFFF</color>
+
+    <!--cinza-->
+    <color name="simpleGray">#e0e0e0</color>
+    <color name="cinza_escuro">#b7b7b7</color>
+
+    <!-- preto -->
+    <color name="preto">#FF000000</color>
+
+    <color name="colorAccent">#FF4081</color>
+</resources>
