@@ -23,19 +23,17 @@ import br.com.thingsproject.things.utils.PermissionUtils
 import br.com.thingsproject.things.utils.Prefs
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
 class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    var mGoogleApiClient : GoogleApiClient? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var mGoogleApiClient : GoogleApiClient
     override fun onCreate(savedInstanceState: Bundle?) {
+        refreshT()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Configura o googleApiClient
@@ -44,10 +42,14 @@ class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Google
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build()
-        // Solicita as permissões
+        // permissoes
         PermissionUtils.validate(this, 0,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         // Salva o estado para o giro da tela
         if (savedInstanceState == null) {
             val fragment = ItensFragement()
@@ -115,34 +117,29 @@ class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Google
 
     override fun onStart() {
         super.onStart()
-        // Check Token
-        refreshT()
-        // Conecta com Google Play Services
-        mGoogleApiClient?.connect()
+        mGoogleApiClient.connect()
     }
 
     override fun onStop() {
-        // Para o GPS
         stopLocationUpdates()
-        // Desconecta
-        mGoogleApiClient?.disconnect()
+        mGoogleApiClient.disconnect()
         super.onStop()
     }
 
     override fun onConnected(p0: Bundle?) {
-        toast("Conectado ao Google Play Services")
         // Inicia o GPS
         startLocationUpdates()
     }
 
     override fun onConnectionSuspended(p0: Int) {
-        toast("Conexão interrompida")
+        Log.d("GoogleAPI", "Conexão interrompida")
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
-        toast("Erro ao conectar: " + p0)
+        Log.d("GoogleAPI", "Erro ao conectar: ${p0}")
     }
 
+    // Check Token
     private fun refreshT() {
         val token = Prefs.getString("token")
         doAsync {
@@ -161,14 +158,12 @@ class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Google
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             val location = locationResult.lastLocation
-            setLocation(location)
+            showLocation(location)
         }
     }
 
-    /* essa função vai fazer o upload das cordenadas para
-     * a busca dos itens de acordo com a proximidade */
-    private fun setLocation(location: Location) {
-        val latlng =  LatLng(location.latitude, location.longitude)
+    private fun showLocation(location: Location) {
+        Log.d("GoogleAPI", "Lat/Lng: ${location.latitude}/${location.longitude}")
     }
 
     // Inicia o rastreamento
@@ -178,12 +173,9 @@ class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Google
         locRequest.interval = 10000
         locRequest.fastestInterval = 5000
         locRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-
-        val locClient = LocationServices.getFusedLocationProviderClient(this)
-        locClient.requestLocationUpdates(locRequest, locationCallback, Looper.myLooper())
+        fusedLocationClient.requestLocationUpdates(locRequest, locationCallback, Looper.myLooper())
     }
 
-    // Para o rastreamento
     private fun stopLocationUpdates() {
         val locClient = LocationServices.getFusedLocationProviderClient(this)
         locClient.removeLocationUpdates(locationCallback)

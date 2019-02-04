@@ -33,41 +33,20 @@ import kotlinx.android.synthetic.main.activity_register_new_item.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class RegisterNewItem : BaseActivity(){
     private val camera = CameraAccess()
     val item : Item? by lazy { intent.getParcelableExtra<Item>("item") }
-    var mGoogleApiClient : GoogleApiClient? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_new_item)
         setupToolbar(R.id.toolbarRI, "Novo item")
         inicializa() // inicializa as views
-        camera.init(savedInstanceState) //prepara a camera
-        // Configura o googleApiClient
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // Salva o estado do arquivo caso gire a tela
         camera.onSaveInstanceState(outState)
-    }
-
-    override fun onConnected(p0: Bundle?) {
-        Log.d("GoogleAPI", "Conectado ao Google Play Services")
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-        Log.d("GoogleAPI", "Conexão interrompida")
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        Log.d("GoogleAPI", "Erro ao conectar: " + p0)
     }
 
     // Gerencia a resposta de permissão
