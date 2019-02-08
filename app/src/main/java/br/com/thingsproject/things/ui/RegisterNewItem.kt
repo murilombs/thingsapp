@@ -33,12 +33,27 @@ import kotlinx.android.synthetic.main.activity_register_new_item.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class RegisterNewItem : BaseActivity(){
+class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private val camera = CameraAccess()
     val item : Item? by lazy { intent.getParcelableExtra<Item>("item") }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var mGoogleApiClient : GoogleApiClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_new_item)
+        // Configura o googleApiClient
+        mGoogleApiClient = GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build()
+        // permissoes
+        PermissionUtils.validate(this, 0,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         setupToolbar(R.id.toolbarRI, "Novo item")
         inicializa() // inicializa as views
     }
@@ -94,9 +109,32 @@ class RegisterNewItem : BaseActivity(){
         bAbrirCamera.setOnClickListener { onClickCamera() }
     }
 
+    override fun onStart() {
+        super.onStart()
+        mGoogleApiClient.connect()
+    }
+
+    override fun onStop() {
+        mGoogleApiClient.disconnect()
+        super.onStop()
+    }
+
+    override fun onConnected(p0: Bundle?) {
+        Log.d("GoogleAPI", "Conexão estabelecida")
+    }
+
+    override fun onConnectionSuspended(p0: Int) {
+        Log.d("GoogleAPI", "Conexão interrompida")
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        Log.d("GoogleAPI", "Erro ao conectar: ${p0}")
+    }
+
     private fun buttomSalvar() {
         if (ItemName.isEmpty()) {
             ItemName.error = getString(R.string.erro_name_registerNewItem)
+            sugestions.error = getString(R.string.erro_campo_req)
             return
         }
         doAsync {
@@ -122,24 +160,23 @@ class RegisterNewItem : BaseActivity(){
                 i.itensImages = r
             }
             // Localização
-            val lastLocation = LocationServices.getFusedLocationProviderClient(this@RegisterNewItem)
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@RegisterNewItem)
             // Verifica permissões
             if (ActivityCompat.checkSelfPermission(this@RegisterNewItem, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this@RegisterNewItem, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 alertAndFinish()
                 //return
             }
             // Fused Location Provider API
-            lastLocation.lastLocation
+            fusedLocationClient.lastLocation
                     .addOnSuccessListener { location ->
-                        Log.d("GoogleAPI", "Lat/Lng: ${location.latitude}/${location.longitude}")
-                        //i.latitude = location.latitude.toString()
-                        //i.longitude = location.longitude.toString()
+                        i.latitude = location.latitude.toString()
+                        i.longitude = location.longitude.toString()
                     }
                     .addOnFailureListener {
-                        Log.d("GoogleAPI", "Não foi possível ao buscar a localização do GPS")
+                        Log.d("Localização", "Não foi possível ao buscar a localização do GPS")
                     }
             // descrição
-            i.description = "Teste de descrição"
+            i.description = sugestions.text.toString()
             //salvar do db
             val response = save(i)
             Toast.makeText(context, response.message, Toast.LENGTH_LONG).show()

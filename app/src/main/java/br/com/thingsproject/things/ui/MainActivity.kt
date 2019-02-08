@@ -163,7 +163,7 @@ class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Google
     }
 
     private fun showLocation(location: Location) {
-        Log.d("GoogleAPI", "Lat/Lng: ${location.latitude}/${location.longitude}")
+        Log.d("Localização", "Lat/Lng: ${location.latitude}/${location.longitude}")
     }
 
     // Inicia o rastreamento

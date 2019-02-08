@@ -19,15 +19,12 @@
     </android.support.design.widget.AppBarLayout>
 
     <!--Nome-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nome_item"
-        android:textSize="18sp"
-        android:layout_marginStart="10dp"/>
+
     <EditText
         android:id="@+id/ItemName"
         android:inputType="text"
+        android:fontFamily="@font/armata"
+        android:hint="@string/nome_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"/>
@@ -57,7 +54,7 @@
         android:id="@+id/tempoCusto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginStart="10dp">
         <RadioButton
             android:id="@+id/doze"
@@ -81,16 +78,13 @@
     </RadioGroup>
 
     <!--Espaço pro endereço-->
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Escolha o endereço na lista abaixo"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"/>
+
     <EditText
         android:id="@+id/sugestions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/armata"
+        android:hint="Escreva uma breve descrição"
         android:layout_marginTop="5dp"/>
 
     <!-- Disponibilidade para entrega -->

@@ -13,7 +13,7 @@
     <string name="Op3">40 Horas | R$ 20</string>
 
     <!--foto-->
-    <string name="add_fotos_text">Adicione de uma a três fotos do seu item</string>
+    <string name="add_fotos_text">Se possivel tire a foto na horizontal</string>
 
     <!--Mensagens-->
     <string name = "erro_name_registerNewItem">Nome é obrigatório</string>
