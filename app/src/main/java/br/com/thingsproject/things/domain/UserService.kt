@@ -12,15 +12,16 @@ import java.io.File
 object UserService {
     private const val base_URL = "http://thingsproject.com.br/profiles"
 
-    fun getProfile(token: String): ResponseProfiles {
+    fun getProfile(token: String): Response {
         val json = HttpHelper.getU(base_URL, token)
-        val profile = fromJson<ResponseProfiles>(json)
+        val profile = fromJson<Response>(json)
         return profile
     }
-    fun auth(profile : Autentifica): ResponseProfiles {
+
+    fun auth(profile : Autentifica): Response {
         val url = "${base_URL}/authenticate/"
         val json = HttpHelper.post(url, profile.toJson())
-        val response = fromJson<ResponseProfiles>(json)
+        val response = fromJson<Response>(json)
         return response
     }
 

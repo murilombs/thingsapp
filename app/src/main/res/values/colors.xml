@@ -20,9 +20,15 @@
     <color name="simpleGray">#e0e0e0</color>
     <color name="cinza_escuro">#b7b7b7</color>
 
-    <!-- preto -->
+    <!-- preto e cinza -->
     <color name="preto">#FF000000</color>
     <color name="black_semi_transparent">#B2000000</color>
+    <color name="material_light_hint_text">#61000000</color>
+    <color name="material_light_active_icon">#8A000000</color>
+    <color name="material_ripple_light">#1F000000</color>
+    <color name="divider_color">#1F000000</color>
+    <color name="active_icon_color">#8A000000</color>
+    <color name="quantum_grey_600">#757575</color>
 
     <color name="colorAccent">#FF4081</color>
 </resources>

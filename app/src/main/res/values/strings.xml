@@ -22,7 +22,10 @@
     <string name = "form_res_err">Preencha os campos corretamente</string>
     <string name = "len_req">A senha deve ter no minimo 8 caracteres</string>
     <string name = "pass_res_err">A senha não confere</string>
+    <string name = "quest_delete">Tem certeza que deseja deletar o item?</string>
     <string name = "welcome">Bem Vindo</string>
+    <string name = "mantido">Item mantido</string>
+    <string name = "location_erro">Não foi possível buscar a localização do GPS</string>
 
     <!-- disponibilidade -->
     <string name="disponivel_entrega">Disponivel</string>
@@ -36,10 +39,14 @@
     <string name="password">Senha</string>
     <string name="password_b">Confirme a Senha</string>
     <string name="submit">Enviar</string>
+    <string name="save">Salvar</string>
     <string name="txt_register">E novo aqui?</string>
     <string name="register">Cadastre-se</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 
     <!--abas-->
     <string name="proprios">Meus</string>
     <string name="emprestados">Alugados</string>
+    <string name="pesquisa">Pesquisar</string>
 </resources>

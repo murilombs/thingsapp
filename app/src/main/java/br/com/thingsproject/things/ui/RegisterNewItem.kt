@@ -1,16 +1,12 @@
 package br.com.thingsproject.things.ui
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
-import android.os.Looper
 import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.Toast
 import br.com.thingsproject.things.R
@@ -28,16 +24,15 @@ import br.com.thingsproject.things.utils.PermissionUtils
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_register_new_item.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.uiThread
 
-class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    private val camera = CameraAccess()
-    val item : Item? by lazy { intent.getParcelableExtra<Item>("item") }
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var mGoogleApiClient : GoogleApiClient
+open class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+    protected val camera = CameraAccess()
+    protected val item : Item by lazy { intent.getParcelableExtra<Item>("item") } //?
+    protected lateinit var fusedLocationClient: FusedLocationProviderClient
+    protected lateinit var mGoogleApiClient : GoogleApiClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_new_item)
@@ -54,7 +49,7 @@ class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Goo
                 Manifest.permission.ACCESS_FINE_LOCATION)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        setupToolbar(R.id.toolbarRI, "Novo item")
+        setupToolbar(R.id.toolbarRI, "Novo item", true)
         inicializa() // inicializa as views
     }
 
@@ -75,7 +70,7 @@ class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Goo
         }
     }
 
-    private fun alertAndFinish() {
+    open fun alertAndFinish() {
         run {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.app_name).setMessage("Para utilizar este aplicativo, você precisa aceitar as permissões.")
@@ -131,7 +126,7 @@ class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Goo
         Log.d("GoogleAPI", "Erro ao conectar: ${p0}")
     }
 
-    private fun buttomSalvar() {
+    open fun buttomSalvar() {
         if (ItemName.isEmpty()) {
             ItemName.error = getString(R.string.erro_name_registerNewItem)
             sugestions.error = getString(R.string.erro_campo_req)
@@ -179,7 +174,10 @@ class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Goo
             i.description = sugestions.text.toString()
             //salvar do db
             val response = save(i)
-            Toast.makeText(context, response.message, Toast.LENGTH_LONG).show()
+            uiThread {
+                toast(response.message)
+                finish()
+            }
         }
     }
 

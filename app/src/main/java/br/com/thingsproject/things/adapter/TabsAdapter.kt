@@ -6,13 +6,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import br.com.thingsproject.things.domain.Abas
-import br.com.thingsproject.things.fragment.ItensFragement
+import br.com.thingsproject.things.fragment.ItensList
 
-class TabsAdapter(private val context: Context?, fm : FragmentManager?) : FragmentStatePagerAdapter(fm) {
+class TabsAdapter(private val context: Context?, fm : FragmentManager) : FragmentStatePagerAdapter(fm) {
     override fun getCount(): Int = 2
 
     //Retornal qual pela posição
-    fun getAbaItens(position: Int) = when(position) {
+    private fun getAbaItens(position: Int) = when(position) {
         0 -> Abas.Meus
         else -> Abas.Alugados
     }
@@ -25,7 +25,7 @@ class TabsAdapter(private val context: Context?, fm : FragmentManager?) : Fragme
 
     override fun getItem(position: Int): Fragment {
         val tipo = getAbaItens(position)
-        val f: Fragment = ItensFragement()
+        val f: Fragment = ItensList()
         val arguments = Bundle()
         arguments.putSerializable("tipo", tipo)
         f.arguments = arguments

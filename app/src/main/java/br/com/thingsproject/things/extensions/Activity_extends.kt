@@ -29,7 +29,7 @@ fun AppCompatActivity.addFragment(@IdRes layout: Int, fragment: Fragment) {
     ft.commit()
 }
 
-fun AppCompatActivity.setupToolbar(@IdRes id: Int, title: String? = null, upNavigation: Boolean = true): ActionBar? {
+fun AppCompatActivity.setupToolbar(@IdRes id: Int, title: String? = null, upNavigation: Boolean): ActionBar? {
     val toolbar = findViewById<Toolbar>(id)
     setSupportActionBar(toolbar)
     if (title != null) {

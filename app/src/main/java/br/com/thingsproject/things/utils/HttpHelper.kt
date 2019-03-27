@@ -10,6 +10,7 @@ object HttpHelper {
     val JSON = MediaType.parse("application/json; charset=utf-8")
     var client = OkHttpClient()
 
+    // ItensService
     // GET ItensService
     fun get(url: String): String {
         log("HttpHelper.get: $url")
@@ -17,6 +18,44 @@ object HttpHelper {
         return getJson(request)
     }
 
+    // GET ItensService BUSCA POR ITENS COM ID DO PROPRIETARIO
+    fun getItensUserID(url: String): String {
+        log("HttpHelper.get: $url")
+        val request = Request.Builder().url(url).get().build()
+        return getJson(request)
+    }
+
+    // POST ItensServices
+    fun postU(url: String, token: String, json: String): String {
+        log("HttpHelper.post: $url > $json")
+        val body = RequestBody.create(JSON, json)
+        val request = Request.Builder()
+                .addHeader("access-token", token)
+                .url(url)
+                .post(body)
+                .build()
+        return getJson(request)
+    }
+
+    fun updateItens(url: String, token: String, json: String): String {
+        log("HttpHelper.put: $url > $json")
+        val body = RequestBody.create(JSON, json)
+        val request = Request.Builder()
+                .addHeader("access-token", token)
+                .url(url)
+                .put(body)
+                .build()
+        return getJson(request)
+    }
+
+    // DELETE ItensServices
+    fun delete(url: String, token: String): String {
+        log("HttpHelper.delete: $url")
+        val request = Request.Builder().addHeader("access-token", token).url(url).delete().build()
+        return getJson(request)
+    }
+
+    // UserServices
     // GET UserServices
     fun getU(url: String, token: String): String {
         log("HttpHelper.get: $url")
@@ -39,18 +78,6 @@ object HttpHelper {
         return getJson(request)
     }
 
-    // POST ItensServices
-    fun postU(url: String, token: String, json: String): String {
-        log("HttpHelper.post: $url > $json")
-        val body = RequestBody.create(JSON, json)
-        val request = Request.Builder()
-                .addHeader("access-token", token)
-                .url(url)
-                .post(body)
-                .build()
-        return getJson(request)
-    }
-
     //Post UserServices
     fun postHeader(url: String, token: String): String {
         log("HttpHelper.post: $url > $token")
@@ -65,16 +92,9 @@ object HttpHelper {
 
     // PUT UserServices
     fun put(url: String, token: String, dados: String): String {
-        log("HttpHelper.postForm: $url > $dados")
+        log("HttpHelper.put: $url > $dados")
         val body = RequestBody.create(JSON, dados)
         val request = Request.Builder().addHeader("access-token", token).url(url).put(body).build()
-        return getJson(request)
-    }
-
-    // DELETE ItensServices
-    fun delete(url: String): String {
-        log("HttpHelper.delete: $url")
-        val request = Request.Builder().url(url).delete().build()
         return getJson(request)
     }
 

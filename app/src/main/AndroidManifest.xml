@@ -40,6 +40,10 @@
         <activity android:name=".ui.UpdateInfoUser"/>
 
         <activity
+            android:name=".ui.EditItem"
+            android:parentActivityName=".ui.MaisInformacoes"/>
+
+        <activity
             android:name=".ui.NewUser"
             android:parentActivityName=".ui.Login"/>
 

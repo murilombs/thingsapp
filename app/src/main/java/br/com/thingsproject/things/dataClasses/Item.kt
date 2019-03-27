@@ -4,6 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Item : Parcelable {
+    // id
+        var _id = ""
     //nome do item
         var name = ""
     //entrega
@@ -33,6 +35,7 @@ class Item : Parcelable {
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeString(this._id)
         dest?.writeString(this.name)
         dest?.writeString(this.delivery)
         dest?.writeString(this.itensImages)
@@ -44,6 +47,7 @@ class Item : Parcelable {
     }
 
     fun readFromParcel(parcel: Parcel) {
+        this._id = parcel.readString()
         this.name = parcel.readString()
         this.delivery = parcel.readString()
         this.itensImages = parcel.readString()

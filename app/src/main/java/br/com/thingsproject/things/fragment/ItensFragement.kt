@@ -1,18 +1,19 @@
 package br.com.thingsproject.things.fragment
 
+import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.support.v7.widget.Toolbar
+import android.view.*
 import br.com.thingsproject.things.R
 import br.com.thingsproject.things.adapter.CardAdapter
 import br.com.thingsproject.things.base.FragmentBasico
 import br.com.thingsproject.things.dataClasses.Item
 import br.com.thingsproject.things.domain.ItensService
+import br.com.thingsproject.things.domain.Response
 import org.jetbrains.anko.startActivity
 import br.com.thingsproject.things.ui.MaisInformacoes
 import br.com.thingsproject.things.ui.RegisterNewItem
@@ -20,61 +21,99 @@ import kotlinx.android.synthetic.main.fragment_itens.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-open class ItensFragement : FragmentBasico(){
+open class ItensFragement : FragmentBasico(), SearchView.OnQueryTextListener {
     protected var itens = listOf<Item>()
-    private var mLayoutManager : LinearLayoutManager? = null
-    private val stateKey : String? = null
+    private lateinit var mCallback : OnNewSearch
 
     //Infla a view do fragment
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_itens, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val rootview = inflater.inflate(R.layout.fragment_itens, container, false)
+        val toolbar = rootview.findViewById<Toolbar>(R.id.toolbaR)
+        if (toolbar != null) {
+            (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        }
+        setHasOptionsMenu(true)
+        return rootview
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mLayoutManager = LinearLayoutManager(activity) //aq
-        recyclerView?.layoutManager = mLayoutManager //aq
+        recyclerView?.layoutManager = LinearLayoutManager(activity)
         recyclerView?.itemAnimator = DefaultItemAnimator()
         recyclerView?.setHasFixedSize(true)
-        tasks() //se não der certo transfira de volta ao onResume
-    }
-
-    override fun onResume() {
-        super.onResume()
+        // Tenho que resolver o problema da visualização do btn
         fab.setOnClickListener {
             activity?.startActivity<RegisterNewItem>()
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable(stateKey, mLayoutManager?.onSaveInstanceState())
-        //remover essa parte abaixo depois
-        val saved = mLayoutManager?.onSaveInstanceState().toString()
-        Log.d("SAVE_CHECK ", saved)
+    override fun onResume() {
+        super.onResume()
+        tasks()
     }
 
+    // Set do botão de pesquisa
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_bar, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView : SearchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            val savedRecyclerViewState = savedInstanceState.getParcelable<Parcelable>(stateKey)
-            if (savedRecyclerViewState != null) {
-                mLayoutManager?.onRestoreInstanceState(savedRecyclerViewState)
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        /**
+         * Talvez...
+         * quando a pesquisa for feita talvez eu possa usar a interface
+         * para comunicar e passar os dados para a MainActivity que por sua vez
+         * vai abrir um novo fragment com a responsta procurada
+         */
+        doAsync {
+            val itens = ItensService.getItensByName(query)
+            uiThread {
+                //Log.i(itens.status, itens.data.toString())
+                mCallback.OnsearchDone(itens)
             }
         }
-        super.onViewStateRestored(savedInstanceState)
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return true
+    }
+
+    /**
+     * Interface
+     * Aqui eu implemento a interface que deve passar os dados List<Item>
+     */
+    interface OnNewSearch {
+        fun OnsearchDone(item: List<Item>)
+    }
+
+    /**
+     * onAttach...
+     * assegura a implementação da Interface
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            mCallback = context as OnNewSearch
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context.toString()
+                    + " must implement OnNewSearch")
+        }
     }
 
     //busca os itens e posibilita os clicks nos cards
     open fun tasks() {
-        doAsync {
-            //busca os Itens
-            itens = ItensService.getItens()
-            uiThread {
-                //Atualiza
-                recyclerView.adapter = CardAdapter(itens) { onClickCard(it)}
+        object: Thread() {
+            override fun run() {
+                itens = ItensService.getItens()
+                activity?.runOnUiThread(Runnable {
+                    recyclerView.adapter = CardAdapter(itens) { onClickCard(it)}
+                })
             }
-        }
+        }.start()
     }
 
     open fun onClickCard(unidade: Item) {

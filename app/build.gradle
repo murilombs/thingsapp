@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
     //lists
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     //cards
@@ -57,9 +57,7 @@ dependencies {
     //Google Play - Localização
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     //Google Play - Mapas
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
-    // FAB futuresimple
-    implementation 'com.getbase:floatingactionbutton:1.10.1'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

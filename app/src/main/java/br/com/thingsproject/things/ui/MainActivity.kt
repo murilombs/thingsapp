@@ -10,26 +10,31 @@ import android.os.Looper
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.Menu
 import android.widget.Toast
 import br.com.thingsproject.things.R
 import br.com.thingsproject.things.base.BaseActivity
+import br.com.thingsproject.things.dataClasses.Item
 import br.com.thingsproject.things.domain.UserService.refreshToken
 import br.com.thingsproject.things.extensions.disableShiftMode
-import br.com.thingsproject.things.fragment.FragmentListChat
-import br.com.thingsproject.things.fragment.FragmentPerfil
-import br.com.thingsproject.things.fragment.ItensFragement
-import br.com.thingsproject.things.fragment.ItensParticulares
+import br.com.thingsproject.things.extensions.setupToolbar
+import br.com.thingsproject.things.extensions.toJson
+import br.com.thingsproject.things.fragment.*
 import br.com.thingsproject.things.utils.PermissionUtils
 import br.com.thingsproject.things.utils.Prefs
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.Response
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
-class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class MainActivity : BaseActivity(),
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        ItensFragement.OnNewSearch {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mGoogleApiClient : GoogleApiClient
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,6 +157,20 @@ class MainActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, Google
                 }
             }
         }
+    }
+
+    override fun OnsearchDone(item: List<Item>) {
+        val fragment = ItensListConsult()
+        val bundle = Bundle()
+        bundle.putString("argument", item.toJson())
+        //val bundle = Bundle().apply { putString("argument", item.toJson()) }
+        Log.i("PutArgument", item.toJson()) // Ate aqui funciona
+        fragment.arguments = bundle
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit()
     }
 
     // Listener para monitorar o GPS

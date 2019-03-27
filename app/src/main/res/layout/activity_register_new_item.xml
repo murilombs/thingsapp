@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:background="@color/segundary"
-        android:text="Registrar Item"
+        android:text="@string/save"
         android:layout_marginTop="20dp"
         android:paddingRight="3dp"
         android:paddingLeft="3dp"
