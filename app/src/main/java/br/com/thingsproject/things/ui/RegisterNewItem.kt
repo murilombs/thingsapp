@@ -134,9 +134,9 @@ open class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks
         }
         doAsync {
             //Cria um Item
-            val i = item?: Item()
+            val i = item
             //nome
-            i.name = ItemName.string
+            i.name = ItemName.string.toLowerCase()
             //tempo/custo
             i.timeCust = when (tempoCusto.checkedRadioButtonId) {
                 R.id.doze -> TempoCusto.twelve.string
@@ -171,7 +171,7 @@ open class RegisterNewItem : BaseActivity(), GoogleApiClient.ConnectionCallbacks
                         Log.d("Localização", "Não foi possível ao buscar a localização do GPS")
                     }
             // descrição
-            i.description = sugestions.text.toString()
+            i.description = sugestions.text.toString().toLowerCase()
             //salvar do db
             val response = save(i)
             uiThread {

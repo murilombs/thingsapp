@@ -65,7 +65,7 @@ class EditItem : RegisterNewItem() {
         doAsync {
             val i = unidade
             //nome
-            i.name = ItemName.string
+            i.name = ItemName.string.toLowerCase()
             //tempo/custo
             i.timeCust = when (tempoCusto.checkedRadioButtonId) {
                 R.id.doze -> TempoCusto.twelve.string
@@ -101,7 +101,7 @@ class EditItem : RegisterNewItem() {
                         toast(R.string.location_erro)
                     }
             // descrição
-            i.description = sugestions.text.toString()
+            i.description = sugestions.text.toString().toLowerCase()
             // salvar a alteração
             val response = putItens(unidade._id, i, token)
             uiThread {

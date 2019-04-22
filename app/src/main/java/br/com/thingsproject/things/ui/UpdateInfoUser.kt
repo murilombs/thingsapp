@@ -63,8 +63,8 @@ class UpdateInfoUser : BaseActivity() {
                 val r = ItensService.postFoto(file)
                 u.profilePicture = r
             }
-            u.first_name    = first_nome.toString()
-            u.second_name   = second_nome.toString()
+            u.first_name    = first_nome.toString().toLowerCase()
+            u.second_name   = second_nome.toString().toLowerCase()
             val response = updateUser(id, token, u)
             if (response.status == "OK") {
                 uiThread { Toast.makeText(context, "Dados Atualizados", Toast.LENGTH_LONG).show() }

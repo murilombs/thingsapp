@@ -32,8 +32,8 @@ class Login : BaseActivity() {
             doAsync {
                 val response = auth(i)                    // obtem a resposta
                 val dados = response.data.toString()         // obtem os dados e converte em string
-                val userData = fromJson<Profiles>(dados)    // converte os dados em um obj Profile
-                salvarIntern(userData)                              // salva internamente os dados
+                //val userData = fromJson<Profiles>(dados)    // converte os dados em um obj Profile
+                //salvarIntern(userData)                              // salva internamente os dados
                 Prefs.setString("token", response.token)       // salva o token
                 uiThread {
                     Toast.makeText(this@Login,R.string.welcome, Toast.LENGTH_LONG).show()

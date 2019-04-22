@@ -10,7 +10,7 @@ import br.com.thingsproject.things.utils.HttpHelper
 import java.io.File
 
 object UserService {
-    private const val base_URL = "http://thingsproject.com.br/profiles"
+    private const val base_URL = "https://thingsproject.com.br/profiles"
 
     fun getProfile(token: String): Response {
         val json = HttpHelper.getU(base_URL, token)
@@ -19,14 +19,14 @@ object UserService {
     }
 
     fun auth(profile : Autentifica): Response {
-        val url = "${base_URL}/authenticate/"
+        val url = "$base_URL/authenticate/"
         val json = HttpHelper.post(url, profile.toJson())
         val response = fromJson<Response>(json)
         return response
     }
 
     fun refreshToken(token: String): Response {
-        val url = "${base_URL}/refresh-token"
+        val url = "$base_URL/refresh-token"
         val json = HttpHelper.postHeader(url, token)
         val response = fromJson<Response>(json)
         return response
@@ -39,7 +39,7 @@ object UserService {
     }
 
     fun updateUser(id : String, token: String, dados : UpdateUser): Response {
-        val url = "${base_URL}/$id"
+        val url = "$base_URL/$id"
         val json = HttpHelper.put(url, token, dados.toJson())
         val response = fromJson<Response>(json)
         return response

@@ -11,6 +11,9 @@ import br.com.thingsproject.things.domain.ItensService
 import br.com.thingsproject.things.domain.UserService
 import kotlinx.android.synthetic.main.fragment_itens.*
 
+/**
+ * A Classe ItensList herda de ItensFragment.
+ * Aqui sao geradas as views de lista para as Abas Meus/Alugados */
 open class ItensList: ItensFragement() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val rootview = inflater.inflate(R.layout.fragment_itens, container, false)

@@ -44,8 +44,8 @@ class NewUser : BaseActivity() {
         if (password1.toString() != password2.toString()) {
             Toast.makeText(this@NewUser, R.string.pass_res_err, Toast.LENGTH_LONG).show()
         } else {
-            i.first_name = name.toString()
-            i.second_name = lastname.toString()
+            i.first_name = name.toString().toLowerCase()
+            i.second_name = lastname.toString().toLowerCase()
             i.email = email.toString()
             i.password = password1.toString()
 

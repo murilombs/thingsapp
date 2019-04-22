@@ -3,9 +3,7 @@ package br.com.thingsproject.things.fragment
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import br.com.thingsproject.things.R
 import br.com.thingsproject.things.adapter.CardAdapter
 import br.com.thingsproject.things.dataClasses.Item
@@ -14,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_itens.*
 
 /** Mostra o retorno da pesquisa */
 
-class ItensListConsult : ItensList() {
+class ItensListConsult : ItensFragement() {
     lateinit var item : String // vai receber o parametro
     lateinit var list : List<Item> // lista com os itens
 

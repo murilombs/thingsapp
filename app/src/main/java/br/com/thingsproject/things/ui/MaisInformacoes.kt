@@ -18,7 +18,7 @@ class MaisInformacoes : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mais_informacoes)
-        setupToolbar(R.id.toolbarMI, unidade.name, true)
+        setupToolbar(R.id.toolbarMI, unidade.name, false)
         initView()
     }
 

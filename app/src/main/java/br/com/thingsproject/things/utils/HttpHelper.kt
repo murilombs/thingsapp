@@ -18,10 +18,18 @@ object HttpHelper {
         return getJson(request)
     }
 
-    // GET ItensService BUSCA POR ITENS COM ID DO PROPRIETARIO
     fun getItensUserID(url: String): String {
         log("HttpHelper.get: $url")
         val request = Request.Builder().url(url).get().build()
+        return getJson(request)
+    }
+
+    // GET ItensService BUSCA POR ITENS COM ID DO PROPRIETARIO
+    fun getItensForOwnerId(id: String, url: String): String {
+        log("HttpHelper.getItensForOwnerId: $url")
+        val request = Request.Builder().url(url).get()
+                .header("header-view", id)
+                .build()
         return getJson(request)
     }
 

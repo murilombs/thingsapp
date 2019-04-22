@@ -10,26 +10,24 @@ import br.com.thingsproject.things.utils.Prefs
 
 //WEB SERVICE
 object ItensService {
-    private val Base_URL = "http://thingsproject.com.br/itens/"
+    private val Base_URL = "https://thingsproject.com.br/itens"
 
-    fun getItens(): List<Item> {
-        val url = Base_URL
-        val json = HttpHelper.get(url)
-        val itens = fromJson<List<Item>>(json)
+    fun getItens(): Response {
+        val json = HttpHelper.get(Base_URL)
+        val itens = fromJson<Response>(json)
         return itens
     }
 
     // fazer um get que busque itens pelo ID proprietario
     fun getItensIDUser(id: String): List<Item> {
-        val url = "http://thingsproject.com.br/itens/owner/${id}"
-        val json = HttpHelper.getItensUserID(url)
+        val json = HttpHelper.getItensForOwnerId(id,"$Base_URL/owner/view")
         val itens = fromJson<List<Item>>(json)
         return itens
     }
 
-    // fazer um get que busque itens pelo ID proprietario
+    // fazer um get que busque itens pelo ID proprietario NA BARRA DE PESQUISA
     fun getItensByName(name: String?): List<Item> {
-        val url = "http://thingsproject.com.br/itens/name/${name}"
+        val url = "$Base_URL/name/$name"
         val json = HttpHelper.getItensUserID(url)
         val itens = fromJson<List<Item>>(json)
         return itens
@@ -44,7 +42,7 @@ object ItensService {
 
     // PUT dos itens
     fun putItens(id: String, item: Item, token : String): Response {
-        val url = "${Base_URL}$id"
+        val url = "$Base_URL/$id"
         val json = HttpHelper.put(url, token, item.toJson())
         val response = fromJson<Response>(json)
         return response
